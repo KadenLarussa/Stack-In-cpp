@@ -1,12 +1,15 @@
+#include <algorithm> //for string reversal
 #include <iostream>
 
 class Stack {
 public:
-    char charStack[100];
     int top;
+    char charStack[50];
+
     void init() {
         top = -1;
     }
+
     bool isStackEmpty() {
         bool answer = false;
         if (top == -1) {
@@ -14,27 +17,62 @@ public:
         }
         return answer;
     }
+
     void push(char c) {
         top++;
         charStack[top] = c;
     }
+
     void pushString(const std::string &word) {
-        for (int i = 0; i < word.length(); i++) {
-                push(word[i]);
+        for (char ch : word) {
+            push(ch);
         }
     }
-    std::string stringPop() {
 
+    void popString(const std::string &stringToPop) {
+        std::string poppedString;
+        bool isMismatch = false;
+
+        for(int i = stringToPop.length() - 1; i >= 0; i--) {
+            if(isStackEmpty()) {
+                isMismatch = true;
+                break;
+            }
+            char ch = peek();
+
+            if (charStack[top] != stringToPop[i]) {
+                    isMismatch = true;
+                    break;
+            }
+            poppedString += pop();
+
+        }
+        //reverse and printout
+        if (!isMismatch && poppedString.length() == stringToPop.length()) {
+            std::reverse(poppedString.begin(), poppedString.end());
+            std::cout << "String popped: " << poppedString << std::endl;
+        } else {
+            std::cout << "Mismatch or error in popping the string." << std::endl;
+        }
     }
 
     char pop() {
-        char c = charStack[top];
-        top--;
-        return c;
+        if(!isStackEmpty()){
+            char c = charStack[top];
+            top--;
+            return c;
+        } else {
+            std::cout << "Empty";
+        }
     }
+
+    char peek() {
+    return charStack[top];
+    }
+
     void showStack() {
         if(!isStackEmpty()) {
-            for (int i = 0; i <= top; i++) {
+            for (int i = top; i >= 0; i--) {
                 std::cout << charStack[i] << " ";
             }
         }
@@ -42,41 +80,41 @@ public:
             std::cout << "Stack is empty!" << std::endl;
         }
     }
+    //testcase for debugging purposes
+    /*
+    static void testCase(std::string testString) {
+        Stack stack;
+        char c;
 
-    void testCase(std::string testString) {
-    Stack stack; char c;
-        stack.init();
-            for (int i = 0; i < testString.length(); i++) {
-                c = testString[i];
-                stack.push(c);
-            }
-        stack.showStack();
+        stack.pushString(testString);
+
         while (!stack.isStackEmpty()){
             std::cout << stack.pop() << " ";
         }
+        std::cout << std::endl;
     }
+    */
+
 };
 
 int main() {
-    malloc(20);
-    std::cout << "Start" << std::endl;
-    Stack stack;
+    Stack stack{};
     stack.init();
-    std::cout << "2" << std::endl;
-    std::cout << std::endl;
-    stack.pushString("bob");
-    stack.showStack();
-    stack.pop
-    stack.pushString("aet normel");
-    stack.showStack();
-    std::cout << std::endl;
-    std::cout << std::endl;
-    stack.pushString("snoino dna revil etah");
-    stack.showStack();
-    std::cout << std::endl;
-    std::cout << std::endl;
-    stack.pushString("SELUR LOBOC");
 
-    stack.showStack();
+    std::string strings[] = {"bob", "aet nomel", "snoino dna revil etah I", "SELUR LOBOC"};
+
+    for (const std::string &str : strings) {
+        std::cout << "Pushing string: " << str << std::endl;
+        stack.pushString(str);
+        std::cout << "Current stack printout: ";
+        stack.showStack();
+        std::cout << std::endl;
+        std::cout << "Popping string: ";
+        stack.popString(str);
+        std::cout << "Current stack printout: ";
+        stack.showStack();
+        std::cout << std::endl;
+    }
+
     return 0;
 }
