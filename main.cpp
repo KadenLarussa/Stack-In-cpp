@@ -38,7 +38,6 @@ public:
                 isMismatch = true;
                 break;
             }
-            char ch = peek();
 
             if (charStack[top] != stringToPop[i]) {
                     isMismatch = true;
