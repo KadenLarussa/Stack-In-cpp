@@ -3,4 +3,4 @@ project(stack_in_cpp)
 
 set(CMAKE_CXX_STANDARD 26)
 
-add_executable(stack_in_cpp main.cpp)
+add_executable(main main.cpp)

@@ -1,5 +1,6 @@
 #include <algorithm> //for string reversal
 #include <iostream>
+#include <fstream>
 
 class Stack {
 public:
@@ -93,27 +94,50 @@ public:
         std::cout << std::endl;
     }
     */
+    bool validateParenthesis(const std::string &input) {
+        return checkBalance(input);
+    }
+
+    bool checkBalance(const std::string &currentLine) {
+        init();
+        for (char ch : currentLine) {
+            if (ch == '(') {
+                push(ch);
+            } else if (ch == ')') {
+                if (isStackEmpty() || peek() != '(') {
+                    return false;
+                }
+                pop();
+            }
+        }
+        return isStackEmpty(); //unmatch check
+    }
 
 };
 
-int main() {
-    Stack stack{};
-    stack.init();
+        int main(){
+            Stack stack0{};
+            stack0.init();
 
-    std::string strings[] = {"bob", "aet nomel", "snoino dna revil etah I", "SELUR LOBOC"};
+            Stack stack1{};
+            stack1.init();
 
-    for (const std::string &str : strings) {
-        std::cout << "Pushing string: " << str << std::endl;
-        stack.pushString(str);
-        std::cout << "Current stack printout: ";
-        stack.showStack();
-        std::cout << std::endl;
-        std::cout << "Popping string: ";
-        stack.popString(str);
-        std::cout << "Current stack printout: ";
-        stack.showStack();
-        std::cout << std::endl;
-    }
+            std::string currentLine;
 
-    return 0;
-}
+            std::ifstream inputFile(R"(C:\Users\taxy\CLionProjects\postfix and infix\input.txt)");
+
+            while (std::getline(inputFile,currentLine)) {
+                if(stack0.validateParenthesis(currentLine)) {
+                    std::cout << "true ";
+                } else {
+                    std::cout << "false ";
+                }
+
+            }
+            inputFile.close();
+
+
+            return 0;
+        }
+
+
