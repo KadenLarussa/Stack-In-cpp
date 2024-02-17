@@ -124,6 +124,9 @@ public:
                     case '-': operandStack.push(val1 - val2); break;
                     case '*': operandStack.push(val1 * val2); break;
                     case '/': operandStack.push(val1 / val2); break;
+                    default:
+                        std::cout << "INVALID CHARACTER IN EQ!";
+                    exit(1);
                 }
             }
         }
