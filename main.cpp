@@ -102,7 +102,7 @@ public:
     }
 
     int evaluatePostfix(const std::string &postfix) {
-        Stack operandStack;
+        Stack operandStack{};
         operandStack.init();
 
         std::string numberBuffer;
@@ -136,7 +136,7 @@ public:
 
 
     std::string infixToPostfix(const std::string &infix) {
-        Stack operatorStack;
+        Stack operatorStack{};
         operatorStack.init();
         std::string postfix;
         std::string numberBuffer;
